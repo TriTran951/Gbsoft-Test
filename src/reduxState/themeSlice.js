@@ -23,8 +23,20 @@ const themeSlice = createSlice({
 
       localStorage.setItem("darkMode", JSON.stringify(state.darkMode));
     },
+    setDarkMode: (state, action) => {
+      state.darkMode = action.payload;
+
+      state.currentTheme = state.darkMode
+        ? constValue.darkTheme
+        : constValue.lightTheme;
+      state.currentTextColor = state.darkMode
+        ? constValue.textDarktheme
+        : constValue.textLightTheme;
+
+      localStorage.setItem("darkMode", JSON.stringify(state.darkMode));
+    },
   },
 });
 
-export const { toggleDarkMode } = themeSlice.actions;
+export const { toggleDarkMode, setDarkMode } = themeSlice.actions;
 export default themeSlice.reducer;

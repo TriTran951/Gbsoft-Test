@@ -27,7 +27,7 @@ function MyAppBar() {
 
   useEffect(() => {
     const savedDarkMode = JSON.parse(localStorage.getItem("darkMode"));
-
+    console.log(savedDarkMode);
     if (savedDarkMode !== null) {
       dispatch(toggleDarkMode(savedDarkMode));
     }
