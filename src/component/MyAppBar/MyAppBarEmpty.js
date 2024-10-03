@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,6 +18,23 @@ function MyAppBarEmpty() {
   const { darkMode, currentTheme, currentTextColor } = useSelector(
     (state) => state.theme
   );
+
+  const [isDarkModeInitialized, setIsDarkModeInitialized] = useState(false);
+
+  useEffect(() => {
+    const savedDarkMode = JSON.parse(localStorage.getItem("darkMode"));
+
+    if (savedDarkMode !== null) {
+      dispatch(toggleDarkMode(savedDarkMode));
+    }
+    setIsDarkModeInitialized(true);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isDarkModeInitialized) {
+      localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    }
+  }, [darkMode, isDarkModeInitialized]);
 
   const themeMUI = createTheme({
     palette: {
