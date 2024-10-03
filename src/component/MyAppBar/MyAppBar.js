@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -23,27 +23,6 @@ function MyAppBar() {
     (state) => state.theme
   );
 
-  const [isDarkModeInitialized, setIsDarkModeInitialized] = useState(false);
-
-  useEffect(() => {
-    const savedDarkMode = JSON.parse(localStorage.getItem("darkMode"));
-
-    if (savedDarkMode !== null) {
-      dispatch(toggleDarkMode(savedDarkMode));
-    }
-    setIsDarkModeInitialized(true);
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (isDarkModeInitialized) {
-      localStorage.setItem("darkMode", JSON.stringify(darkMode));
-    }
-  }, [darkMode, isDarkModeInitialized]);
-
-  const handleDarkModeToggle = () => {
-    dispatch(toggleDarkMode());
-  };
-
   const themeMUI = createTheme({
     palette: {
       titleTextColor: red.A700,
@@ -59,11 +38,6 @@ function MyAppBar() {
 
     navigate(`/add-edit-post`);
   };
-
-  // Chỉ render khi `darkMode` đã khởi tạo
-  if (!isDarkModeInitialized) {
-    return null; // Hoặc hiện loading spinner
-  }
 
   return (
     <ThemeProvider theme={themeMUI}>
@@ -159,7 +133,7 @@ function MyAppBar() {
               ></i>
               <Switch
                 checked={darkMode}
-                onChange={handleDarkModeToggle}
+                onChange={() => dispatch(toggleDarkMode())}
                 inputProps={{ "aria-label": "Dark Mode Toggle" }}
               />
             </Box>

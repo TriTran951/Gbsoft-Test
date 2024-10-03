@@ -3,8 +3,12 @@ import { constValue } from "GlobalConfig/constValue";
 
 const initialState = {
   darkMode: JSON.parse(localStorage.getItem("darkMode")) || false,
-  currentTheme: constValue.lightTheme,
-  currentTextColor: constValue.textLightTheme,
+  currentTheme: JSON.parse(localStorage.getItem("darkMode"))
+    ? constValue.darkTheme
+    : constValue.lightTheme,
+  currentTextColor: JSON.parse(localStorage.getItem("darkMode"))
+    ? constValue.textDarktheme
+    : constValue.textLightTheme,
 };
 
 const themeSlice = createSlice({
